@@ -1,12 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react'
 import PersonList from './PersonList'
 import PersonEdit from './PersonEdit'
 import PersonAdd from './PersonAdd'
 import Nav from './Nav'
 import './styles/App.css'
 import './skeleton.css'
-import React, { Component } from 'react';
 
 class App extends Component {
   state = {
@@ -19,35 +17,64 @@ class App extends Component {
   }
 
   goToPersonEdit = (person) => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.view = 'PersonEdit'
+    newState.selectedPerson = person
+    this.setState(newState)
   }
 
   goToPersonAdd = () => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.view = 'PersonAdd'
+    this.setState(newState)
   }
 
   goHome = () => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.view = 'PersonList'
+    newState.selectedPerson = undefined
+    this.setState(newState)
   }
 
   changeFirstName = (event) => {
-    // TODO: Add code here
+    const newState = this.state
+    newState.selectedPerson.firstName = event.target.value // text in the box
+    this.setState(newState)
   }
 
   changeLastName = (event) => {
-   // TODO: Add code here
+    const newState = this.state
+    newState.selectedPerson.lastName = event.target.value // text in the box
+    this.setState(newState)
   }
 
   saveChanges = (updatedPerson) => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.people = this.state.people.map((person) => {
+      if (person.id === updatedPerson.id) {
+        return updatedPerson
+      } else return person
+    })
+    newState.view = 'PersonList'
+    newState.selectedPerson = undefined
+    this.setState(newState)
   }
 
   deletePerson = () => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.people = this.state.people.filter(person => person.id !== this.state.selectedPerson.id)
+    newState.view = 'PersonList'
+    newState.selectedPerson = undefined
+    this.setState(newState)
   }
 
   saveNewPerson = (newPerson) => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newPerson.id = Math.floor(Math.random() * 999999);
+    newState.people.push(newPerson)
+    newState.view = 'PersonList'
+    newState.selectedPerson = undefined
+    this.setState(newState)
   }
 
   render() {
@@ -73,5 +100,4 @@ class App extends Component {
   }
 }
 
-
-export default App;
+export default App

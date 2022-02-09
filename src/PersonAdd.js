@@ -13,11 +13,15 @@ class PersonAdd extends Component {
   }
 
   changeFirstName = (event) => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.firstName = event.target.value // text in the box
+    super.setState(newState)
   }
 
   changeLastName = (event) => {
-    // TODO: Add code here
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.lastName = event.target.value // text in the box
+    super.setState(newState)
   }
 
   render() {
